@@ -1,0 +1,42 @@
+- name: ensure package dependencies
+  become: true
+  ansible.builtin.apt:
+    state: present
+    update_cache: yes
+    cache_valid_time: 600
+    name:
+      - apt-transport-https
+  when: ansible_facts['os_family'] == "Ubuntu"
+
+- name: add microsoft apt key
+  become: true
+  ansible.builtin.apt_key:
+    url: https://packages.microsoft.com/keys/microsoft.asc
+    state: present
+  when: ansible_facts['os_family'] == "Ubuntu"
+
+- name: add microsoft apt repository
+  become: true
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main
+  register: vscode_repository
+  when: ansible_facts['os_family'] == "Ubuntu"
+
+- name: update package cache
+  become: true
+  ansible.builtin.apt:
+    update_cache: yes
+  when: ansible_facts['os_family'] == "Ubuntu"
+
+- name: install vscode
+  become: true
+  ansible.builtin.apt:
+    state: present
+    name: code
+  when: ansible_facts['os_family'] == "Ubuntu"
+
+- name: install vscode
+  become: false
+  shell:
+    cmd: 'paru -S visual-studio-code-bin'
+  when: ansible_facts['os_family'] == "Manjaro"

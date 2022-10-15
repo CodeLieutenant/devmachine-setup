@@ -1,0 +1,46 @@
+---
+
+- name: Update all packages
+  hosts: dev_machine
+  remote_user: root
+  become: true
+  shell:
+    cmd: 'pacman -Syu --noconfirm'
+
+- name: Install default programs
+  vars_files:
+    - "{{ playbook_dir }}/config.yml"
+  remote_user: root
+  become: true
+  shell:
+    cmd: "pacman -S --needed {{ packages | join(' ') }}"
+
+- name: Install Rust
+  roles:
+    - role: install.rust
+      vars:
+        channel: stable
+
+- name: Install Paru
+  roles:
+    - role: install.paru
+
+- name: Install Neovim
+  roles:
+    - role: install.neovim
+
+- name: Install VSCode
+  roles:
+    - role: install.vscode
+
+- name: Install Rust-Analazer-Downloader
+  roles:
+    - role: install.rust-analazer-downloader
+
+- name: Install Hosts Edit
+  roles:
+    - role: install.hosts-edit
+
+- name: Install Jetbrains Toolbox
+  roles:
+    - role: install.jetbrains-toolbox

@@ -1,0 +1,19 @@
+packages:
+  - bat
+  - exa
+  - bottom
+  - dust
+  - fd
+  - ripgrep
+  - alacritty
+  - reflector
+  - base-develop
+  - telegram-desktop
+  - signal-desktop
+  - xclip
+  - xsel
+  - wl-clipboard
+
+aur_packages:
+  - whatsapp-for-linux
+  - slack-desktop

@@ -1,0 +1,24 @@
+---
+# code: language=ansible
+
+- name: 'Download Paru from Github'
+  ansible.builtin.git:
+    vars:
+      accept_hostkey: yes
+      accept_newhostkey: yes
+      clone: yes
+      dest: /tmp/paru
+      repo: https://github.com/Morganamilo/paru.git
+      version: v1.11.1
+    environment:
+      GIT_TERMINAL_PROMPT: 0
+
+- name: 'Compile and install Paru'
+  shell:
+    cmd: 'makepkg -si'
+    chdir: /tmp/paru
+
+- name: 'Remove paru from temp dir'
+  file:
+    path: /tmp/paru
+    state: absent

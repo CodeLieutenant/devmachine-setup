@@ -1,0 +1,11 @@
+develop/ssh/*
+/.idea
+.idea/*
+.DS_Store
+plugins/__pycache__/
+plugins/callbacks/__pycache__/
+mitogen-0.2.9/mitogen/__pycache__/
+mitogen-0.2.9/__pycache__/
+mitogen-0.2.9/ansible_mitogen/__pycache__/
+mitogen-0.2.9/ansible_mitogen/plugins/*/__pycache__/
+/develop/vagrant/.vagrant/

@@ -1,0 +1,29 @@
+---
+# code: language=ansible
+
+# Download rustup from website when OS is Ubuntu
+- name: 'Download rustup from url'
+  get_url:
+    dest: '/tmp/rustup'
+    url: https://sh.rustup.rs
+    mode: 0755
+  when: ansible_facts['os_family'] == "Ubuntu"
+
+- name: 'Install {{ channel }} rust and tools'
+  shell:
+   cmd: './rustup -q --profile {{ channel }}'
+   chdir: /tmp
+  when: ansible_facts['os_family'] == "Ubuntu"
+
+# Rustup can be found with latest version in Base Arch/Manjaro Repositories
+- name: Install Rustup from Official Repositories
+  GROG.package:
+    become: true
+    vars:
+      package_list: rustup
+  when: ansible_facts['os_family'] == "Manjaro"
+
+- name: 'Install {{ channel }} rust and tools'
+  shell:
+   cmd: 'rustup -q --profile {{ channel }}'
+  when: ansible_facts['os_family'] == "Manjaro"

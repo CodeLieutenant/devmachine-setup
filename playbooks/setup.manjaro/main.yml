@@ -1,46 +1,69 @@
 ---
-
 - name: Update all packages
   hosts: dev_machine
-  remote_user: root
+  connection: local
   become: true
-  shell:
-    cmd: 'pacman -Syu --noconfirm'
+  tasks:
+    - shell:
+      cmd: 'pacman -Syu --noconfirm'
 
 - name: Install default programs
+  hosts: dev_machine
+  connection: local
+  become: true
   vars_files:
     - "{{ playbook_dir }}/config.yml"
-  remote_user: root
-  become: true
-  shell:
-    cmd: "pacman -S --needed {{ packages | join(' ') }}"
+  roles:
+    - role: GROG.package
+      package_list:
+      - name: '{{ item }}'
+        pacman: '{{ item }}'
+  with_items: '{{ packages }}'
 
 - name: Install Rust
+  hosts: dev_machine
+  connection: local
   roles:
     - role: install.rust
       vars:
         channel: stable
 
 - name: Install Paru
+  hosts: dev_machine
+  connection: local
   roles:
     - role: install.paru
 
 - name: Install Neovim
+  hosts: dev_machine
+  connection: local
   roles:
     - role: install.neovim
 
 - name: Install VSCode
+  hosts: dev_machine
+  connection: local
+  become: true
   roles:
     - role: install.vscode
 
 - name: Install Rust-Analazer-Downloader
+  hosts: dev_machine
+  connection: local
+  become: true
   roles:
     - role: install.rust-analazer-downloader
 
 - name: Install Hosts Edit
+  hosts: dev_machine
+  connection: local
+  become: true
   roles:
     - role: install.hosts-edit
 
 - name: Install Jetbrains Toolbox
+  hosts: dev_machine
+  connection: local
+  become: true
   roles:
     - role: install.jetbrains-toolbox

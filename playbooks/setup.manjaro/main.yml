@@ -5,65 +5,79 @@
   become: true
   tasks:
     - shell:
-      cmd: 'pacman -Syu --noconfirm'
+        cmd: 'pacman -Syu --noconfirm'
 
-- name: Install default programs
-  hosts: dev_machine
-  connection: local
-  become: true
-  vars_files:
-    - "{{ playbook_dir }}/config.yml"
-  roles:
-    - role: GROG.package
-      package_list:
-      - name: '{{ item }}'
-        pacman: '{{ item }}'
-  with_items: '{{ packages }}'
+# TODO: Needs testing one by one
+# - name: Install default programs
+#   hosts: dev_machine
+#   connection: local
+#   become: true
+#   vars_files:
+#     - "{{ playbook_dir }}/config.yml"
+#   roles:
+#     - role: GROG.package
+#       package_list:
+#       - name: '{{ item }}'
+#         pacman: '{{ item }}'
+#   with_items: '{{ packages }}'
 
-- name: Install Rust
-  hosts: dev_machine
-  connection: local
-  roles:
-    - role: install.rust
-      vars:
-        channel: stable
+# - name: Install Python packages
+#   hosts: dev_machine
+#   connection: local
+#   become: true
+#   vars_files:
+#     - "{{ playbook_dir }}/config.yml"
+#   tasks:
+#     - pip:
+#         state: present
+#         name: '{{ item }}'
+#       with_items: '{{ pip_packages }}'
 
-- name: Install Paru
-  hosts: dev_machine
-  connection: local
-  roles:
-    - role: install.paru
+# - name: Install Rust
+#   hosts: dev_machine
+#   connection: local
+#   become: true
+#   roles:
+#     - role: install.rust
+#       vars:
+#         channel: stable
 
-- name: Install Neovim
-  hosts: dev_machine
-  connection: local
-  roles:
-    - role: install.neovim
+# - name: Install Paru
+#   hosts: dev_machine
+#   connection: local
+#   roles:
+#     - role: install.paru
 
-- name: Install VSCode
-  hosts: dev_machine
-  connection: local
-  become: true
-  roles:
-    - role: install.vscode
+# - name: Install Neovim
+#   hosts: dev_machine
+#   connection: local
+#   roles:
+#     - role: install.neovim
 
-- name: Install Rust-Analazer-Downloader
-  hosts: dev_machine
-  connection: local
-  become: true
-  roles:
-    - role: install.rust-analazer-downloader
+# - name: Install VSCode
+#   hosts: dev_machine
+#   connection: local
+#   become: true
+#   roles:
+#     - role: install.vscode
 
-- name: Install Hosts Edit
-  hosts: dev_machine
-  connection: local
-  become: true
-  roles:
-    - role: install.hosts-edit
+# - name: Install Rust-Analazer-Downloader
+#   hosts: dev_machine
+#   connection: local
+#   become: true
+#   roles:
+#     - role: install.rust-analazer-downloader
 
-- name: Install Jetbrains Toolbox
-  hosts: dev_machine
-  connection: local
-  become: true
-  roles:
-    - role: install.jetbrains-toolbox
+# - name: Install Hosts Edit
+#   hosts: dev_machine
+#   connection: local
+#   become: true
+#   roles:
+#     - role: install.hosts-edit
+
+# - name: Install Jetbrains Toolbox
+#   hosts: dev_machine
+#   connection: local
+#   become: true
+#   roles:
+#     - role: install.jetbrains-toolbox

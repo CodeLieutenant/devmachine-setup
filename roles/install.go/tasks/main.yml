@@ -1,0 +1,33 @@
+---
+
+- name: Install Go from Official Repositories
+  GROG.package:
+    package_list:
+      - name: go
+        pacman: go
+  when: ansible_facts['os_family'] == "Manjaro"
+
+- name: Install Go
+  unarchive:
+    src: https://dl.google.com/go{{ go_version }}.linux-amd64.tar.gz
+    dest: /usr/local/go
+    remote_src: yes
+    creates: /usr/local/go/bin/go
+  register: go_download
+  when: ansible_facts['os_family'] == "Ubuntu"
+
+- name: Set up Go Env
+  blockinfile:
+    path: '{{ item }}'
+    marker: "### {mark} Ansible managed: GoLang"
+    block: |
+      export GOPATH=$HOME/go
+      export PATH="$PATH:$GOPATH/bin:/usr/local/go/bin"
+  with_items:
+   - ~/.bashrc
+   - ~/.zshrc
+
+- name: Install Go Packages
+  shell:
+   cmd: 'go install {{ item }}'
+  with_items: '{{ go_packages }}'

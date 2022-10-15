@@ -1,7 +1,6 @@
 ---
 # code: language=ansible
 
-# Download rustup from website when OS is Ubuntu
 - name: 'Download rustup from url'
   get_url:
     dest: '/tmp/rustup'
@@ -37,3 +36,13 @@
     state: absent
     path: /tmp/rustup
   when: ansible_facts['os_family'] == "Ubuntu"
+
+- name: Set up Rust Env
+  blockinfile:
+    path: '{{ item }}'
+    marker: "### {mark} Ansible managed: Rust"
+    block: |
+      . "$HOME/.cargo/env"
+  with_items:
+   - ~/.bashrc
+   - ~/.zshrc

@@ -20,10 +20,20 @@
   GROG.package:
     become: true
     vars:
-      package_list: rustup
+      package_list:
+        - name: rustup
+          pacman: rustup
+          apt: rustup
+
   when: ansible_facts['os_family'] == "Manjaro"
 
 - name: 'Install {{ channel }} rust and tools'
   shell:
    cmd: 'rustup -q --profile {{ channel }}'
   when: ansible_facts['os_family'] == "Manjaro"
+
+- name: 'Remove nodejs shell script'
+  file:
+    state: absent
+    path: /tmp/rustup
+  when: ansible_facts['os_family'] == "Ubuntu"

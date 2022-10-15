@@ -1,0 +1,39 @@
+---
+
+- name: Install NeoVim
+  GROG.package:
+    package_list:
+      - name: neovim
+        pacman: neovim
+        apt: neovim
+
+- name: 'Download Neovim Configuration'
+  ansible.builtin.git:
+    accept_hostkey: yes
+    accept_newhostkey: yes
+    clone: yes
+    dest: "{{ ansible_env.HOME }}/.config/nvim"
+    repo: git@github.com:malusev998/nvim.git
+    version: v1.11.1
+  environment:
+    GIT_TERMINAL_PROMPT: '0'
+
+- name: Install root npm packages for neovim
+  npm:
+    name: '{{ item }}'
+    state: latest
+    global: yes
+  with_items:
+    - pyright
+    - typescript-language-server
+    - bash-language-server
+    - vscode-langservers-extracted
+    - dockerfile-language-server-nodejs
+    - intelephense
+    - yaml-language-server
+    - neovim
+
+- name: Install bottle python package
+  ansible.builtin.pip:
+    name: pyvim
+    state: latest

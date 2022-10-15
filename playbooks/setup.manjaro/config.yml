@@ -13,6 +13,12 @@ packages:
   - xclip
   - xsel
   - wl-clipboard
+  - clang
+  - gcc
+  - llvm
+  - ninja
+  - cmake
+  - jq
 
 aur_packages:
   - whatsapp-for-linux

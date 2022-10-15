@@ -28,17 +28,16 @@
 
 - name: Install docker {{ ansible_facts['os_family'] }}
   GROG.package:
-    vars:
-      package_list:
-        - name: docker
-          pacman: docker
-          apt: docker-ce
-        - name: cli
-          pacman_ignore: yes
-          apt: docker-ce-cli
-        - name: containerd
-          pacman_ignore: yes
-          apt: containerd.io
+    package_list:
+      - name: docker
+        pacman: docker
+        apt: docker-ce
+      - name: cli
+        pacman_ignore: yes
+        apt: docker-ce-cli
+      - name: containerd
+        pacman_ignore: yes
+        apt: containerd.io
 
 - name: Install python docker module
   pip:

@@ -156,4 +156,11 @@
   roles:
     - role: install.rust-analyzer-downloader
 
-# TODO - Config File Role, VMWare, Jetbrains-Toolbox,
+- name: Install Jetbrains Toolbox
+  hosts: dev_machine
+  connection: local
+  become: true
+  roles:
+    - role: install.jetbrains-toolbox
+
+# TODO - Config File Role, VMWare

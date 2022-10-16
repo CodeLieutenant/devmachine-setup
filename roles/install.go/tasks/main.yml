@@ -1,11 +1,9 @@
 ---
 
-- name: Install Go from Official Repositories
-  GROG.package:
-    package_list:
-      - name: go
-        pacman: go
-  when: ansible_facts['os_family'] == "Manjaro"
+- name: 'Install Go Manjaro/Arch'
+  shell:
+    cmd: 'pacman -S go --noconfirm --needed'
+  when: ansible_facts['os_family'] == "Archlinux"
 
 - name: Install Go
   unarchive:
@@ -17,6 +15,7 @@
   when: ansible_facts['os_family'] == "Ubuntu"
 
 - name: Set up Go Env
+  become: false
   blockinfile:
     path: '{{ item }}'
     marker: "### {mark} Ansible managed: GoLang"
@@ -24,8 +23,8 @@
       export GOPATH=$HOME/go
       export PATH="$PATH:$GOPATH/bin:/usr/local/go/bin"
   with_items:
-   - ~/.bashrc
-   - ~/.zshrc
+   - "{{ ansible_env.USER }}/.bashrc"
+   - "{{ ansible_env.USER }}/.zshrc"
 
 - name: Install Go Packages
   shell:

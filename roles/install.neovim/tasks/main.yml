@@ -1,20 +1,23 @@
 ---
 
-- name: Install NeoVim
-  GROG.package:
-    package_list:
-      - name: neovim
-        pacman: neovim
-        apt: neovim
+- name: 'Install Neovim Ubuntu'
+  apt:
+    name: neovim
+    state: present
+  when: ansible_facts['os_family'] == "Ubuntu"
+
+- name: 'Install Neovim Manjaro/Arch'
+  shell:
+    cmd: 'pacman -S neovim --noconfirm --needed'
+  when: ansible_facts['os_family'] == "Archlinux"
 
 - name: 'Download Neovim Configuration'
+  become: false
   ansible.builtin.git:
-    accept_hostkey: yes
     accept_newhostkey: yes
     clone: yes
     dest: "{{ ansible_env.HOME }}/.config/nvim"
     repo: git@github.com:malusev998/nvim.git
-    version: v1.11.1
   environment:
     GIT_TERMINAL_PROMPT: '0'
 

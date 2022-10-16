@@ -38,5 +38,5 @@
 - name: install vscode
   become: false
   shell:
-    cmd: 'paru -S visual-studio-code-bin'
-  when: ansible_facts['os_family'] == "Manjaro"
+    cmd: 'paru -S visual-studio-code-bin --noconfirm --needed'
+  when: ansible_facts['os_family'] == "Archlinux"

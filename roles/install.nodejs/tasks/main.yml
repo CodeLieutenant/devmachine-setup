@@ -20,10 +20,12 @@
   when: ansible_facts['os_family'] == "Ubuntu"
 
 - name: Install NodeJS from Official Repositories
-  GROG.package:
+  include_role:
+    name: GROG.package
+  vars:
     package_list:
       - name: nodejs
-        pacman: node
+        pacman: nodejs
         apt: nodejs
       - name: npm
         pacman: npm

@@ -26,8 +26,10 @@
     state: present
   when: ansible_facts['os_family'] == "Ubuntu"
 
-- name: Install docker {{ ansible_facts['os_family'] }}
-  GROG.package:
+- name: "Install docker {{ ansible_facts['os_family'] }}"
+  include_role:
+    name: GROG.package
+  vars:
     package_list:
       - name: docker
         pacman: docker
@@ -46,7 +48,7 @@
       - docker
       - docker-compose
 
-- name: adding existing user '{{ user }}' to Docker group
+- name: "adding existing user {{ user }} to Docker group"
   user:
     name: "{{ user }}"
     groups: docker

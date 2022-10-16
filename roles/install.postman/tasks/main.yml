@@ -1,9 +1,10 @@
 ---
 
 - name: 'Install Postman via AUR'
+  become: false
   shell:
-   cmd: 'paru -S postman-bin'
-  when: ansible_facts['os_family'] == "Manjaro"
+   cmd: 'paru -S postman-bin --noconfirm --needed'
+  when: ansible_facts['os_family'] == "Archlinux"
 
 - name: "Install Postman"
   unarchive:

@@ -14,35 +14,34 @@
    chdir: /tmp
   when: ansible_facts['os_family'] == "Ubuntu"
 
-# Rustup can be found with latest version in Base Arch/Manjaro Repositories
-- name: Install Rustup from Official Repositories
-  GROG.package:
-    become: true
-    vars:
-      package_list:
-        - name: rustup
-          pacman: rustup
-          apt: rustup
+- name: 'Install Rustup'
+  when: ansible_facts['os_family'] == "Archlinux"
+  debug:
+    msg: '{{ ansible_facts }}'
 
-  when: ansible_facts['os_family'] == "Manjaro"
+- name: 'Install Rustup'
+  when: ansible_facts['os_family'] == "Archlinux"
+  shell:
+    cmd: 'pacman -S --noconfirm rustup'
 
 - name: 'Install {{ channel }} rust and tools'
   shell:
-   cmd: 'rustup -q --profile {{ channel }}'
-  when: ansible_facts['os_family'] == "Manjaro"
+   cmd: "rustup install {{ channel }} --profile {{ profile | default('default') }}"
+  when: ansible_facts['os_family'] == "Archlinux"
 
-- name: 'Remove nodejs shell script'
+- name: 'Remove Rustup shell script'
   file:
     state: absent
     path: /tmp/rustup
   when: ansible_facts['os_family'] == "Ubuntu"
 
 - name: Set up Rust Env
+  become: false
   blockinfile:
     path: '{{ item }}'
     marker: "### {mark} Ansible managed: Rust"
     block: |
       . "$HOME/.cargo/env"
   with_items:
-   - ~/.bashrc
-   - ~/.zshrc
+   - "{{ ansible_env.USER }}/.bashrc"
+   - "{{ ansible_env.USER }}/.zshrc"

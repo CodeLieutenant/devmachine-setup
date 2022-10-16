@@ -3,4 +3,7 @@
 
 ## Required Ansible Galaxy Modules
 
-- GROG.package
+-
+```shell
+ansible-galaxy install GROG.package
+```

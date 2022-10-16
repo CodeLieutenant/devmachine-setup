@@ -1,1 +1,41 @@
 ---
+
+- name: 'Download Hosts-Edit from Github'
+  become: false
+  ansible.builtin.git:
+    accept_newhostkey: yes
+    clone: yes
+    dest: /tmp/hosts-edit
+    repo: https://github.com/malusev998/hosts.git
+  environment:
+    GIT_TERMINAL_PROMPT: '0'
+
+- name: Compile Hosts-Edit
+  become: false
+  ansible.builtin.shell:
+    cmd: cargo build --profile dist --all
+    chdir: /tmp/hosts-edit
+
+- name: Install Hosts-Edit
+  become: false
+  ansible.builtin.copy:
+    dest: "{{ ansible_env.HOME }}/bin/hosts"
+    src: /tmp/hosts-edit/target/dist/hosts-edit
+    remote_src: no
+
+- name: 'Remove Hosts-Edit from temp dir'
+  ignore_errors: true
+  ansible.builtin.file:
+    path: /tmp/hosts-edit
+    state: absent
+
+- name: "Setup {{ ansible_env.HOME }}/bin in PATH"
+  become: false
+  blockinfile:
+    path: '{{ item }}'
+    marker: "### {mark} Ansible managed: $HOME/bin"
+    block: |
+      export PATH="$PATH:$HOME/bin"
+  with_items:
+   - "{{ ansible_env.USER }}/.bashrc"
+   - "{{ ansible_env.USER }}/.zshrc"

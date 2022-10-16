@@ -1,0 +1,7 @@
+---
+
+- name: Setup swappiness
+  become: true
+  copy:
+    content: "vm.swappiness={{ swappiness | default(10) | int }}"
+    dest: /etc/sysctl.d/100-swappiness.conf

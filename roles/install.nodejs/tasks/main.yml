@@ -2,7 +2,7 @@
 
 - name: 'Download NodeJS repo'
   get_url:
-    dest: '/tmp/nodesource_setup.sh'
+    dest: /tmp/nodesource_setup.sh
     url: https://deb.nodesource.com/setup_18.x
     mode: 0755
   when: ansible_facts['os_family'] == "Ubuntu"
@@ -14,6 +14,7 @@
   when: ansible_facts['os_family'] == "Ubuntu"
 
 - name: 'Remove nodejs shell script'
+  ignore_errors: true
   file:
     state: absent
     path: /tmp/nodesource_setup.sh

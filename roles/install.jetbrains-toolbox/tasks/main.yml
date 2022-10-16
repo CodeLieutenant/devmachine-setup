@@ -1,0 +1,7 @@
+---
+
+- name: Install Jetbrains Toolbox from AUR
+  become: false
+  shell:
+    cmd: "paru -S jetbrains-toolbox --noconfirm --needed"
+  when: ansible_facts['os_family'] == "Archlinux"

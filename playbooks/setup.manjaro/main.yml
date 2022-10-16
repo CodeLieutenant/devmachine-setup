@@ -1,6 +1,32 @@
 ---
 # ansible-playbook --ask-vault-pass --ask-become-pass -vvv --extra-vars '{ key_name: "MySSHKeyName" }' playbooks/setup.manjaro/main.yml
 
+- name: Reduce swappiness
+  vars_files:
+    - "{{ playbook_dir }}/config.yml"
+  roles:
+    - role: reduce.swappiness
+      vars:
+        swappiness: "{{ swappiness }}"
+
+- name: Get fastest mirrors
+  hosts: dev_machine
+  connection: local
+  become: true
+  tasks:
+    - shell:
+        cmd: 'pacman-mirrors --fasttrack'
+
+- name: Enable TRIM
+  hosts: dev_machine
+  connection: local
+  become: true
+  tasks:
+    - ansible.builtin.systemd:
+      name: fstrim.timer
+      state: started
+      enabled: yes
+
 - name: Update all packages
   hosts: dev_machine
   connection: local
@@ -58,6 +84,16 @@
   roles:
     - role: install.paru
 
+- name: Install AUR packages
+  hosts: dev_machine
+  connection: local
+  become: false
+  vars_files:
+    - "{{ playbook_dir }}/config.yml"
+  tasks:
+    - shell:
+        cmd: "paru -S {{ aur_pacakges | join(' ') }} --noconfirm --needed"
+
 - name: Install NodeJS
   hosts: dev_machine
   connection: local
@@ -105,3 +141,19 @@
   become: false
   roles:
     - role: install.postman
+
+- name: Install Hosts Edit
+  hosts: dev_machine
+  connection: local
+  become: false
+  roles:
+    - role: install.hosts-edit
+
+- name: Install Hosts Edit
+  hosts: dev_machine
+  connection: local
+  become: false
+  roles:
+    - role: install.rust-analyzer-downloader
+
+# TODO - Config File Role, VMWare, Jetbrains-Toolbox,

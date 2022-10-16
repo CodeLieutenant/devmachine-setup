@@ -11,11 +11,12 @@
     GIT_TERMINAL_PROMPT: '0'
 
 - name: 'Compile and install Paru'
-  shell:
+  ansible.builtin.shell:
     cmd: 'makepkg -si --noconfirm --needed --noprogressbar'
     chdir: /tmp/paru
 
 - name: 'Remove paru from temp dir'
-  file:
+  ignore_errors: true
+  ansible.builtin.file:
     path: /tmp/paru
     state: absent

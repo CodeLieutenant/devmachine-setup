@@ -1,9 +1,11 @@
 ---
 
-- name: 'Install Go Manjaro/Arch'
-  shell:
-    cmd: 'pacman -S go --noconfirm --needed'
-  when: ansible_facts['os_family'] == "Archlinux"
+- name: 'Install Go'
+  include_role:
+    name: install.package
+  vars:
+    packages:
+      - go
 
 - name: Install Go
   unarchive:
@@ -23,8 +25,8 @@
       export GOPATH=$HOME/go
       export PATH="$PATH:$GOPATH/bin:/usr/local/go/bin"
   with_items:
-   - "{{ ansible_env.USER }}/.bashrc"
-   - "{{ ansible_env.USER }}/.zshrc"
+   - "{{ lookup('env', 'HOME') }}/.bashrc"
+   - "{{ lookup('env', 'HOME') }}/.zshrc"
 
 - name: Install Go Packages
   shell:

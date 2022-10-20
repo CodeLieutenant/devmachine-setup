@@ -1,7 +1,11 @@
 ---
 
-- name: Install Jetbrains Toolbox from AUR
-  become: false
-  shell:
-    cmd: "paru -S jetbrains-toolbox --noconfirm --needed"
+- name: "Install Jetbrains Toolbox"
+  include_role:
+    name: install.aur-package
+  vars:
+    packages:
+      - jetbrains-toolbox
   when: ansible_facts['os_family'] == "Archlinux"
+
+# TODO Add setup for Ubuntu

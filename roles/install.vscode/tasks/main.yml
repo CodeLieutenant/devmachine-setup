@@ -35,8 +35,10 @@
     name: code
   when: ansible_facts['os_family'] == "Ubuntu"
 
-- name: install vscode
-  become: false
-  shell:
-    cmd: 'paru -S visual-studio-code-bin --noconfirm --needed'
+- name: "Install Visual Studio Code"
+  include_role:
+    name: install.aur-package
+  vars:
+    packages:
+      - visual-studio-code-bin
   when: ansible_facts['os_family'] == "Archlinux"

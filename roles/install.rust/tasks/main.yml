@@ -43,5 +43,5 @@
     block: |
       . "$HOME/.cargo/env"
   with_items:
-   - "{{ ansible_env.USER }}/.bashrc"
-   - "{{ ansible_env.USER }}/.zshrc"
+   - "{{ lookup('env', 'HOME') }}/.bashrc"
+   - "{{ lookup('env', 'HOME') }}/.zshrc"

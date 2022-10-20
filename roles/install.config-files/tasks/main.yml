@@ -1,1 +1,30 @@
 ---
+
+- name: Set up Aliases
+  become: false
+  vars:
+    aliases: "{{ lookup('file', 'files/.aliases') }}"
+  blockinfile:
+    path: '{{ item }}'
+    marker: "### {mark} Ansible managed: Aliases"
+    content: '{{ aliases }}'
+  with_items:
+   - "{{ lookup('env', 'HOME') }}/.bashrc"
+   - "{{ lookup('env', 'HOME') }}/.zshrc"
+
+- name: Set up SSH Editor
+  become: false
+  vars:
+    ssh_shell: "{{ lookup('file', 'files/.ssh_shell') }}"
+  blockinfile:
+    path: '{{ item }}'
+    marker: "### {mark} Ansible managed: SSH Shell"
+    content: '{{ ssh_shell }}'
+  with_items:
+   - "{{ lookup('env', 'HOME') }}/.bashrc"
+   - "{{ lookup('env', 'HOME') }}/.zshrc"
+
+- name: Setup Git Config
+  template:
+    src: files/.gitconfig.j2
+    dest: "{{ lookup('env', 'HOME') }}/.gitconfig"

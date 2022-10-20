@@ -16,10 +16,16 @@
     cmd: cargo build --profile dist --all
     chdir: /tmp/hosts-edit
 
+- name: 'Create bin dir'
+  become: false
+  ansible.builtin.file:
+    dest: "{{ lookup('env', 'HOME') }}/bin"
+    state: directory
+
 - name: Install Hosts-Edit
   become: false
   ansible.builtin.copy:
-    dest: "{{ ansible_env.HOME }}/bin/hosts"
+    dest: "{{ lookup('env', 'HOME') }}/bin/hosts"
     src: /tmp/hosts-edit/target/dist/hosts-edit
     remote_src: no
 
@@ -29,7 +35,7 @@
     path: /tmp/hosts-edit
     state: absent
 
-- name: "Setup {{ ansible_env.HOME }}/bin in PATH"
+- name: "Setup {{ lookup('env', 'HOME') }}/bin in PATH"
   become: false
   blockinfile:
     path: '{{ item }}'
@@ -37,5 +43,5 @@
     block: |
       export PATH="$PATH:$HOME/bin"
   with_items:
-   - "{{ ansible_env.USER }}/.bashrc"
-   - "{{ ansible_env.USER }}/.zshrc"
+   - "{{ lookup('env', 'HOME') }}/.bashrc"
+   - "{{ lookup('env', 'HOME') }}/.zshrc"

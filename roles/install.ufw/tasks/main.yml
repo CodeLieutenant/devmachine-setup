@@ -1,0 +1,30 @@
+---
+
+- name: Install UFW
+  include_role:
+    name: GROG.package
+  vars:
+    package_list:
+      - name: ufw
+        pacman: ufw
+        apt: ufw
+      - name: ufw-extras
+        pacman: ufw-extras
+        apt_ignore: yes
+
+- name: Enable UFW systemd service
+  become: true
+  ansible.builtin.systemd:
+      name: ufw.service
+      state: started
+      enabled: yes
+
+- name: 'Enable UFW'
+  become: true
+  shell:
+    cmd: 'ufw enable'
+
+- name: 'Allow SSH'
+  become: true
+  shell:
+    cmd: 'ufw allow ssh'

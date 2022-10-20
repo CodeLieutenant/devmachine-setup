@@ -2,12 +2,13 @@
 # ansible-playbook --ask-vault-pass --ask-become-pass -vvv --extra-vars '{ key_name: "MySSHKeyName" }' playbooks/setup.manjaro/main.yml
 
 - name: Reduce swappiness
+  hosts: dev_machine
+  connection: local
+  become: true
   vars_files:
     - "{{ playbook_dir }}/config.yml"
   roles:
     - role: reduce.swappiness
-      vars:
-        swappiness: "{{ swappiness }}"
 
 - name: Get fastest mirrors
   hosts: dev_machine
@@ -22,18 +23,36 @@
   connection: local
   become: true
   tasks:
-    - ansible.builtin.systemd:
-      name: fstrim.timer
-      state: started
-      enabled: yes
+    - systemd:
+      vars:
+        name: fstrim.timer
+        state: started
+        enabled: yes
+
+- name: Config Files
+  hosts: dev_machine
+  connection: local
+  become: false
+  vars_files:
+    - "{{ playbook_dir }}/config.yml"
+  roles:
+    - role: install.config-files
 
 - name: Update all packages
   hosts: dev_machine
   connection: local
   become: true
-  tasks:
-    - shell:
-        cmd: 'pacman -Syu --noconfirm'
+  roles:
+    - role: update.packages
+      vars:
+        system: 'arch'
+
+- name: Setup Firewall
+  hosts: dev_machine
+  connection: local
+  become: true
+  roles:
+    - role: install.ufw
 
 - name: Install default programs
   hosts: dev_machine
@@ -90,9 +109,10 @@
   become: false
   vars_files:
     - "{{ playbook_dir }}/config.yml"
-  tasks:
-    - shell:
-        cmd: "paru -S {{ aur_pacakges | join(' ') }} --noconfirm --needed"
+  roles:
+    - role: install.aur-package
+      vars:
+        pacakges: '{{ aur_packages }}'
 
 - name: Install NodeJS
   hosts: dev_machine
@@ -104,13 +124,11 @@
 - name: Install GoLang
   hosts: dev_machine
   connection: local
+  become: true
   vars_files:
     - "{{ playbook_dir }}/config.yml"
-  become: true
   roles:
     - role: install.go
-      vars:
-        go_packages: '{{ golang_packages }}'
 
 - name: Install Neovim
   hosts: dev_machine
@@ -122,7 +140,6 @@
 - name: Install VSCode
   hosts: dev_machine
   connection: local
-  become: ansible_facts['os_family'] == "Ubuntu"
   roles:
     - role: install.vscode
 
@@ -163,4 +180,3 @@
   roles:
     - role: install.jetbrains-toolbox
 
-# TODO - Config File Role, VMWare

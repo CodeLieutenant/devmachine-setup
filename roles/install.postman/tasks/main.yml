@@ -1,9 +1,11 @@
 ---
 
-- name: 'Install Postman via AUR'
-  become: false
-  shell:
-   cmd: 'paru -S postman-bin --noconfirm --needed'
+- name: "Install Postman via AUR"
+  include_role:
+    name: install.aur-package
+  vars:
+    packages:
+      - postman-bin
   when: ansible_facts['os_family'] == "Archlinux"
 
 - name: "Install Postman"

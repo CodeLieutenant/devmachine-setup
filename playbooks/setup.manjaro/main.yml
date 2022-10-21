@@ -47,12 +47,13 @@
       vars:
         system: 'arch'
 
-- name: Setup Firewall
-  hosts: dev_machine
-  connection: local
-  become: true
-  roles:
-    - role: install.ufw
+# Problem with IPTables
+# - name: Setup Firewall
+#   hosts: dev_machine
+#   connection: local
+#   become: true
+#   roles:
+#     - role: install.ufw
 
 - name: Install default programs
   hosts: dev_machine

@@ -19,6 +19,13 @@
       state: started
       enabled: yes
 
+- name: Enable IPTables systemd service
+  become: true
+  ansible.builtin.systemd:
+      name: iptables.service
+      state: started
+      enabled: yes
+
 - name: 'Enable UFW'
   become: true
   shell:

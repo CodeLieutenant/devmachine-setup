@@ -1,0 +1,29 @@
+---
+
+- name: 'Download rustup from url'
+  get_url:
+    dest: '/tmp/rustup'
+    url: https://sh.rustup.rs
+    mode: 0755
+
+- name: 'Install {{ channel }} rust and tools'
+  shell:
+   cmd: './rustup -q --profile {{ channel }}'
+   chdir: /tmp
+
+- name: 'Remove Rustup shell script'
+  ignore_errors: true
+  file:
+    state: absent
+    path: /tmp/rustup
+
+- name: Set up Rust Env
+  become: false
+  blockinfile:
+    path: '{{ item }}'
+    marker: "### {mark} Ansible managed: Rust"
+    block: |
+      . "$HOME/.cargo/env"
+  with_items:
+   - "{{ lookup('env', 'HOME') }}/.bashrc"
+   - "{{ lookup('env', 'HOME') }}/.zshrc"

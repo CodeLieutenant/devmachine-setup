@@ -1,0 +1,18 @@
+---
+
+- name: 'Download NodeJS repo'
+  get_url:
+    dest: /tmp/nodesource_setup.sh
+    url: "https://deb.nodesource.com/setup_{{ version }}.x"
+    mode: 0755
+
+- name: 'Add NodeJS Repo'
+  shell:
+    chdir: '/tmp'
+    cmd: './nodesource_setup.sh'
+
+- name: 'Remove nodejs shell script'
+  ignore_errors: true
+  file:
+    state: absent
+    path: /tmp/nodesource_setup.sh

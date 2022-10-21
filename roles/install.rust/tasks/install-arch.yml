@@ -1,0 +1,26 @@
+---
+
+- name: 'Install Rustup'
+  include_role:
+    name: GROG.package
+  vars:
+    package_list:
+      - name: rustup
+        pacman: rustup
+        apt_ignore: yes
+
+- name: 'Install {{ channel }} rust and tools'
+  become: false
+  shell:
+   cmd: "rustup install {{ channel }} --profile {{ profile | default('default') }}"
+
+- name: Set up Rust Env
+  become: false
+  blockinfile:
+    path: '{{ item }}'
+    marker: "### {mark} Ansible managed: Rust"
+    block: |
+      export PATH="$HOME/.cargo/bin:$PATH"
+  with_items:
+   - "{{ lookup('env', 'HOME') }}/.bashrc"
+   - "{{ lookup('env', 'HOME') }}/.zshrc"

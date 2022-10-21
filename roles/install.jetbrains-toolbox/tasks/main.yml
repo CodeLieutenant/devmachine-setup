@@ -7,5 +7,3 @@
     packages:
       - jetbrains-toolbox
   when: ansible_facts['os_family'] == "Archlinux"
-
-# TODO Add setup for Ubuntu

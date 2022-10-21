@@ -1,23 +1,6 @@
 ---
 
-- name: 'Download NodeJS repo'
-  get_url:
-    dest: /tmp/nodesource_setup.sh
-    url: https://deb.nodesource.com/setup_18.x
-    mode: 0755
-  when: ansible_facts['os_family'] == "Ubuntu"
-
-- name: 'Add NodeJS Repo'
-  shell:
-    chdir: '/tmp'
-    cmd: './nodesource_setup.sh'
-  when: ansible_facts['os_family'] == "Ubuntu"
-
-- name: 'Remove nodejs shell script'
-  ignore_errors: true
-  file:
-    state: absent
-    path: /tmp/nodesource_setup.sh
+- include_tasks: 'ubuntu-repo.yml'
   when: ansible_facts['os_family'] == "Ubuntu"
 
 - name: Install NodeJS from Official Repositories

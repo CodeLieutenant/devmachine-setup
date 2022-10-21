@@ -54,11 +54,11 @@
     groups: docker
     append: yes
 
-- name: Ensure docker daemon is running
-  service:
-    name: docker
-    state: started
-    enabled: true
+# - name: Ensure docker daemon is running
+#   service:
+#     name: docker
+#     state: started
+#     enabled: true
 
 - name: Check for a reboot - Debian and Ubuntu
   register: reboot_required_file

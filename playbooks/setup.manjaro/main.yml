@@ -121,7 +121,7 @@
   roles:
     - role: install.aur-package
       vars:
-        pacakges: '{{ aur_packages }}'
+        packages: '{{ aur_packages }}'
 
 - name: Install NodeJS
   hosts: dev_machine

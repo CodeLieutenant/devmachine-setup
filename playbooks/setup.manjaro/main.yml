@@ -13,7 +13,7 @@
 - name: Get fastest mirrors
   hosts: dev_machine
   connection: local
-  become: truev
+  become: true
   tasks:
     - shell:
         cmd: 'pacman-mirrors --fasttrack'

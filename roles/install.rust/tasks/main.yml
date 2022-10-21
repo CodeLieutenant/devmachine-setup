@@ -26,12 +26,15 @@
     package_list:
       - name: rustup
         pacman: rustup
-  when: ansible_facts['os_family'] == "Archlinux"
+        apt_ignore: yes
 
 - name: 'Install {{ channel }} rust and tools'
   shell:
    cmd: "rustup install {{ channel }} --profile {{ profile | default('default') }}"
-  when: ansible_facts['os_family'] == "Archlinux"
+
+- name: 'Set default'
+  shell:
+    cmd: "rustup default {{ channel }}"
 
 - name: 'Remove Rustup shell script'
   file:

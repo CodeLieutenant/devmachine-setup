@@ -55,3 +55,16 @@
   with_items:
    - "{{ lookup('env', 'HOME') }}/.bashrc"
    - "{{ lookup('env', 'HOME') }}/.zshrc"
+  when: ansible_facts['os_family'] == "Ubuntu"
+
+- name: Set up Rust Env
+  become: false
+  blockinfile:
+    path: '{{ item }}'
+    marker: "### {mark} Ansible managed: Rust"
+    block: |
+      export PATH="$HOME/.cargo/bin:$PATH"
+  with_items:
+   - "{{ lookup('env', 'HOME') }}/.bashrc"
+   - "{{ lookup('env', 'HOME') }}/.zshrc"
+  when: ansible_facts['os_family'] == "Archlinux"

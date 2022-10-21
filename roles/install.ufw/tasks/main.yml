@@ -8,6 +8,9 @@
       - name: ufw
         pacman: ufw
         apt: ufw
+      - name: iptables
+        pacman: iptables
+        apt: iptables
       - name: ufw-extras
         pacman: ufw-extras
         apt_ignore: yes

@@ -1,11 +1,13 @@
 ---
 
 - name: Create SSH Directory
+  become: false
   file:
     path: "{{ ansible_env.HOME }}/.ssh"
     state: directory
 
 - name: "Generate SSH key"
+  become: false
   community.crypto.openssh_keypair:
     path: "{{ ansible_env.HOME }}/.ssh/{{ ssh_key_filename | default('id_ed25519') }}"
     type: ed25519

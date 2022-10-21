@@ -42,6 +42,7 @@ package_list:
   - { name: php-sodium, pacman: php-sodium }
   - { name: php-sqlite, pacman: php-sqlite }
   - { name: xdebug, pacman: xdebug }
+  - { name: python-pip, pacman: python-pip }
 
 aur_packages:
   - whatsapp-for-linux

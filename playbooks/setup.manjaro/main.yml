@@ -81,7 +81,7 @@
   connection: local
   vars_files:
     - "{{ playbook_dir }}/config.yml"
-  become: false
+  become: no
   roles:
     - role: setup.ssh-key
     - role: add.ssh-key.github

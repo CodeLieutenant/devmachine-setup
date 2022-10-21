@@ -1,0 +1,6 @@
+- name: "Install Visual Studio Code"
+  include_role:
+    name: install.aur-package
+  vars:
+    packages:
+      - visual-studio-code-bin

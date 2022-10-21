@@ -1,4 +1,4 @@
 - name: Install AUR packages
   become: false
   shell:
-    cmd: "paru -S {{ pacakges | join(' ') }} --nouseask --noconfirm --needed --removemake --noupgrademenu --noinstalldebug --cleanafter --nokeepsrc"
+    cmd: "paru -S {{ packages | join(' ') }} --nouseask --noconfirm --needed --removemake --noupgrademenu --noinstalldebug --cleanafter --nokeepsrc"

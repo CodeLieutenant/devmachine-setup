@@ -89,47 +89,47 @@
 #         ssh_pub_key_path: "{{ lookup('env', 'HOME') }}/.ssh/{{ ssh_key_filename }}.pub"
 #         github_access_token: "{{ github_ssh_token }}"
 
-- name: Install Rust
-  hosts: dev_machine
-  connection: local
-  become: true
-  roles:
-    - role: install.rust
-      vars:
-        channel: stable
+# - name: Install Rust
+#   hosts: dev_machine
+#   connection: local
+#   become: true
+#   roles:
+#     - role: install.rust
+#       vars:
+#         channel: stable
 
-- name: Install Paru
-  hosts: dev_machine
-  connection: local
-  roles:
-    - role: install.paru
+# - name: Install Paru
+#   hosts: dev_machine
+#   connection: local
+#   roles:
+#     - role: install.paru
 
-- name: Install AUR packages
-  hosts: dev_machine
-  connection: local
-  become: false
-  vars_files:
-    - "{{ playbook_dir }}/config.yml"
-  roles:
-    - role: install.aur-package
-      vars:
-        pacakges: '{{ aur_packages }}'
+# - name: Install AUR packages
+#   hosts: dev_machine
+#   connection: local
+#   become: false
+#   vars_files:
+#     - "{{ playbook_dir }}/config.yml"
+#   roles:
+#     - role: install.aur-package
+#       vars:
+#         pacakges: '{{ aur_packages }}'
 
-- name: Install NodeJS
-  hosts: dev_machine
-  connection: local
-  become: true
-  roles:
-    - role: install.nodejs
+# - name: Install NodeJS
+#   hosts: dev_machine
+#   connection: local
+#   become: true
+#   roles:
+#     - role: install.nodejs
 
-- name: Install GoLang
-  hosts: dev_machine
-  connection: local
-  become: true
-  vars_files:
-    - "{{ playbook_dir }}/config.yml"
-  roles:
-    - role: install.go
+# - name: Install GoLang
+#   hosts: dev_machine
+#   connection: local
+#   become: true
+#   vars_files:
+#     - "{{ playbook_dir }}/config.yml"
+#   roles:
+#     - role: install.go
 
 - name: Install Neovim
   hosts: dev_machine

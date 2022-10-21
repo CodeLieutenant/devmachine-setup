@@ -16,7 +16,7 @@
   ansible.builtin.git:
     accept_newhostkey: yes
     clone: yes
-    dest: "{{ ansible_env.HOME }}/.config/nvim"
+    dest: "{{ lookup('env', 'HOME') }}/.config/nvim"
     repo: git@github.com:malusev998/nvim.git
   environment:
     GIT_TERMINAL_PROMPT: '0'

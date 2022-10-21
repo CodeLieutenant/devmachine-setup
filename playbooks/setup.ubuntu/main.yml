@@ -1,5 +1,6 @@
 ---
-# ansible-playbook --ask-vault-pass --ask-become-pass -vvv --extra-vars '{ key_name: "MySSHKeyName" }' playbooks/setup.manjaro/main.yml
+
+# ansible-playbook --ask-vault-pass --ask-become-pass -vvv --extra-vars '{ key_name: "MySSHKeyName" }' playbooks/setup.ubuntu/main.yml
 
 - name: Reduce swappiness
   hosts: dev_machine
@@ -10,31 +11,12 @@
   roles:
     - role: reduce.swappiness
 
-- name: Get fastest mirrors
-  hosts: dev_machine
-  connection: local
-  become: true
-  tasks:
-    - shell:
-        cmd: 'pacman-mirrors --fasttrack'
-
 - name: Setup Firewall
   hosts: dev_machine
   connection: local
   become: true
   roles:
     - role: install.ufw
-
-- name: Enable TRIM
-  hosts: dev_machine
-  connection: local
-  become: true
-  tasks:
-    - systemd:
-      vars:
-        name: fstrim.timer
-        state: started
-        enabled: yes
 
 - name: Config Files
   hosts: dev_machine
@@ -52,28 +34,8 @@
   roles:
     - role: update.packages
       vars:
-        system: 'arch'
+        system: 'ubuntu'
 
-- name: Install default programs
-  hosts: dev_machine
-  connection: local
-  become: true
-  vars_files:
-    - "{{ playbook_dir }}/config.yml"
-  roles:
-    - role: GROG.package
-
-- name: Install Python packages
-  hosts: dev_machine
-  connection: local
-  become: true
-  vars_files:
-    - "{{ playbook_dir }}/config.yml"
-  tasks:
-    - pip:
-        state: present
-        name: '{{ item }}'
-      with_items: '{{ pip_packages }}'
 
 - name: Generate SSH Key
   hosts: dev_machine
@@ -105,23 +67,6 @@
     - role: install.rust
       vars:
         channel: stable
-
-- name: Install Paru
-  hosts: dev_machine
-  connection: local
-  roles:
-    - role: install.paru
-
-- name: Install AUR packages
-  hosts: dev_machine
-  connection: local
-  become: false
-  vars_files:
-    - "{{ playbook_dir }}/config.yml"
-  roles:
-    - role: install.aur-package
-      vars:
-        pacakges: '{{ aur_packages }}'
 
 - name: Install NodeJS
   hosts: dev_machine
@@ -173,10 +118,9 @@
   roles:
     - role: install.rust-analyzer-downloader
 
-- name: Install Jetbrains Toolbox
-  hosts: dev_machine
-  connection: local
-  become: true
-  roles:
-    - role: install.jetbrains-toolbox
-
+# - name: Install Jetbrains Toolbox
+#   hosts: dev_machine
+#   connection: local
+#   become: true
+#   roles:
+#     - role: install.jetbrains-toolbox

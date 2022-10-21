@@ -1,0 +1,88 @@
+package_list:
+  # - { name: bat, pacman: bat }
+  # - { name: aspell-en, pacman: aspell-en }
+  # - { name: libmythes, pacman: libmythes }
+  # - { name: redshift, pacman: redshift }
+  # - { name: languagetool, pacman: languagetool }
+  # - { name: mythes-en, pacman: mythes-en }
+  # - { name: exa, pacman: exa }
+  # - { name: bottom, pacman: bottom }
+  # - { name: dust, pacman: dust }
+  # - { name: fd, pacman: fd }
+  # - { name: ripgrep, pacman: ripgrep }
+  # - { name: alacritty, pacman: alacritty }
+  # - { name: base-develop, pacman: base-devel }
+  # - { name: telegram-desktop, pacman: telegram-desktop }
+  # - { name: git-delta, pacman: git-delta }
+  # - { name: signal-desktop, pacman: signal-desktop }
+  # - { name: xclip, pacman: xclip }
+  # - { name: xsel, pacman: xsel }
+  # - { name: wl-clipboard, pacman: wl-clipboard }
+  # - { name: clang, pacman: clang }
+  # - { name: gcc, pacman: gcc }
+  # - { name: llvm, pacman: llvm }
+  # - { name: ninja, pacman: ninja }
+  # - { name: cmake, pacman: cmake }
+  # - { name: jq, pacman: jq }
+  # - { name: lua, pacman: lua }
+  # - { name: php, pacman: php }
+  # - { name: composer, pacman: composer }
+  # - { name: php-cgi, pacman: php-cgi }
+  # - { name: php-apcu, pacman: php-apcu }
+  # - { name: php-embed, pacman: php-embed }
+  # - { name: php-gd, pacman: php-gd }
+  # - { name: php-geoip, pacman: php-geoip }
+  # - { name: php-grpc, pacman: php-grpc }
+  # - { name: php-igbinary, pacman: php-igbinary }
+  # - { name: php-mongodb, pacman: php-mongodb }
+  # - { name: php-memcached, pacman: php-memcached }
+  # - { name: php-intl, pacman: php-intl }
+  # - { name: php-imagick, pacman: php-imagick }
+  # - { name: php-redis, pacman: php-redis }
+  # - { name: php-sodium, pacman: php-sodium }
+  # - { name: php-sqlite, pacman: php-sqlite }
+  # - { name: xdebug, pacman: xdebug }
+  # - { name: python-pip, pacman: python-pip }
+
+pip_packages:
+  - boto3
+  - csvkit
+  - flake8
+  - pip-tools
+  - pycodestyle
+  - pygments
+  - pythonpy
+  - pyyaml
+  - requests
+  - github3.py
+  - ansible-lint
+
+go_packages:
+  - github.com/go-delve/delve/cmd/dlv@latest
+  - github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+  - github.com/uudashr/gopkgs/v2/cmd/gopkgs@latest
+  - github.com/ramya-rao-a/go-outline@latest
+  - github.com/cweill/gotests/gotests@latest
+  - github.com/cosmtrek/air@latest
+  - github.com/fatih/gomodifytags@latest
+  - github.com/josharian/impl@latest
+  - github.com/haya14busa/goplay/cmd/goplay@latest
+  - github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@latest
+  - github.com/go-swagger/go-swagger/cmd/swagger@latest
+  - github.com/GoTestTools/limgo@latest
+  - mvdan.cc/gofumpt@latest
+
+swappiness: 10
+
+name: 'Dusan Malusev'
+email: 'dusan@dusanmalusev.dev'
+ssh_key_filename: 'id_ed25519'
+key_name: SSHTesting
+github_ssh_token: !vault |
+  $ANSIBLE_VAULT;1.1;AES256
+  63613734346536663132306536316162656466323834356162363062336638653161396631383965
+  3765323763353630316235343735323834323535353561650a396537303230643134353561313937
+  32393735613930333433393039383763343035373239313931343731373832313365316539373832
+  3534386337623938310a383332653165383162323935653839653765313231663231316138616635
+  36303733316535633637323238353939343936313465366664663530656539313466316433613530
+  6238353530636262343338623436383335303865353235376430

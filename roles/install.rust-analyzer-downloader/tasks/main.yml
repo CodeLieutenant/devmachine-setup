@@ -27,6 +27,7 @@
   ansible.builtin.copy:
     dest: "{{ lookup('env', 'HOME') }}/bin/rad"
     src: /tmp/rad/target/release/rad
+    mode: '0755'
     remote_src: no
 
 - name: 'Remove RAD from temp dir'

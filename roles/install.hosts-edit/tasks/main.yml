@@ -27,6 +27,7 @@
   ansible.builtin.copy:
     dest: "{{ lookup('env', 'HOME') }}/bin/hosts"
     src: /tmp/hosts-edit/target/dist/hosts-edit
+    mode: '0755'
     remote_src: no
 
 - name: 'Remove Hosts-Edit from temp dir'

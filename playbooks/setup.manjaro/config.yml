@@ -55,7 +55,6 @@ aur_packages:
   - discord_arch_electron
   - shellcheck-bin
   - nerd-fonts-hack
-  - rar
 
 pip_packages:
   - boto3

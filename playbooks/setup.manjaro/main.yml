@@ -10,20 +10,20 @@
   roles:
     - role: reduce.swappiness
 
-- name: Get fastest mirrors
-  hosts: dev_machine
-  connection: local
-  become: true
-  tasks:
-    - shell:
-        cmd: 'pacman-mirrors --fasttrack'
+# - name: Get fastest mirrors
+#   hosts: dev_machine
+#   connection: local
+#   become: true
+#   tasks:
+#     - shell:
+#         cmd: 'pacman-mirrors --fasttrack'
 
-- name: Setup Firewall
-  hosts: dev_machine
-  connection: local
-  become: true
-  roles:
-    - role: install.ufw
+# - name: Setup Firewall
+#   hosts: dev_machine
+#   connection: local
+#   become: true
+#   roles:
+#     - role: install.ufw
 
 - name: Enable TRIM
   hosts: dev_machine
@@ -45,14 +45,14 @@
   roles:
     - role: install.config-files
 
-- name: Update all packages
-  hosts: dev_machine
-  connection: local
-  become: true
-  roles:
-    - role: update.packages
-      vars:
-        system: 'arch'
+# - name: Update all packages
+#   hosts: dev_machine
+#   connection: local
+#   become: true
+#   roles:
+#     - role: update.packages
+#       vars:
+#         system: 'arch'
 
 - name: Install default programs
   hosts: dev_machine
@@ -66,7 +66,7 @@
 - name: Install Python packages
   hosts: dev_machine
   connection: local
-  become: true
+  become: false
   vars_files:
     - "{{ playbook_dir }}/config.yml"
   tasks:
@@ -106,11 +106,11 @@
       vars:
         channel: stable
 
-- name: Install Paru
-  hosts: dev_machine
-  connection: local
-  roles:
-    - role: install.paru
+# - name: Install Paru
+#   hosts: dev_machine
+#   connection: local
+#   roles:
+#     - role: install.paru
 
 - name: Install AUR packages
   hosts: dev_machine
@@ -146,11 +146,11 @@
   roles:
     - role: install.neovim
 
-- name: Install VSCode
-  hosts: dev_machine
-  connection: local
-  roles:
-    - role: install.vscode
+# - name: Install VSCode
+#   hosts: dev_machine
+#   connection: local
+#   roles:
+#     - role: install.vscode
 
 - name: Install Postman
   hosts: dev_machine

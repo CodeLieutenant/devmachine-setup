@@ -5,18 +5,10 @@ alias cat="bat -pp"
 alias vim="nvim"
 alias grep="rg -p --follow -n"
 
-if [ "$(command -v exa)" ]; then
-  unalias -m 'll'
-  unalias -m 'l'
-  unalias -m 'la'
-  unalias -m 'ls'
-  alias ls='exa --icons -b --header -H --octal-permissions --color=always -h -G'
-  alias ll='exa exa --icons -b --header -H --octal-permissions --color=always -h -l -a -s type'
-fi
+alias ls='exa --icons -b --header -H --octal-permissions --color=always -h -G'
+alias ll='exa exa --icons -b --header -H --octal-permissions --color=always -h -l -a -s type'
 
-if [ "$(command -v btm)" ]; then
-  alias bottom="btm"
-fi
+alias bottom="btm"
 
 alias ref="source ~/.zshrc"
 alias mkdir="mkdir -pv"
@@ -38,3 +30,28 @@ alias viz="vim ~/.zshrc"
 alias python="python3"
 alias pip="pip3"
 alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'
+alias cleanup='sudo pacman -Rns (pacman -Qtdq)'
+alias dir='dir --color=auto'
+alias vdir='vdir --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias hw='hwinfo --short'                          # Hardware Info
+alias big="expac -H M '%m\t%n' | sort -h | nl"     # Sort installed packages according to size in MB
+alias gitpkg='pacman -Q | grep -i "\-git" | wc -l' # List amount of -git packages
+alias grubup="sudo update-grub"
+alias fixpacman="sudo rm /var/lib/pacman/db.lck"
+alias tarnow='tar -acf '
+alias untar='tar -xvf '
+alias wget='wget -c '
+alias rmpkg="sudo pacman -Rdd"
+alias psmem='ps auxf | sort -nr -k 4'
+alias psmem10='ps auxf | sort -nr -k 4 | head -10'
+alias upd='/usr/bin/garuda-update'
+alias mirror="sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist"
+alias mirrord="sudo reflector --latest 50 --number 20 --sort delay --save /etc/pacman.d/mirrorlist"
+alias mirrors="sudo reflector --latest 50 --number 20 --sort score --save /etc/pacman.d/mirrorlist"
+alias mirrora="sudo reflector --latest 50 --number 20 --sort age --save /etc/pacman.d/mirrorlist"
+alias cat='bat --style header --style snip --style changes --style header'
+[ ! -x /usr/bin/yay ] && [ -x /usr/bin/paru ] && alias yay='paru'
+alias jctl="journalctl -p 3 -xb"

@@ -1,15 +1,13 @@
 ---
 
-- name: 'Install Neovim Ubuntu'
-  apt:
-    name: neovim
-    state: present
-  when: ansible_facts['os_family'] == "Ubuntu"
-
-- name: 'Install Neovim Manjaro/Arch'
-  shell:
-    cmd: 'pacman -S neovim --noconfirm --needed'
-  when: ansible_facts['os_family'] == "Archlinux"
+- name: Install Neovim
+  include_role:
+    name: GROG.package
+  vars:
+    package_list:
+      - name: neovim
+        pacman: neovim
+        apt: neovim
 
 - name: 'Download Neovim Configuration'
   become: false
@@ -37,6 +35,7 @@
     - neovim
 
 - name: Install bottle python package
+  become: false
   ansible.builtin.pip:
     name: pyvim
     state: latest

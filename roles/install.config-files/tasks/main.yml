@@ -1,5 +1,7 @@
 ---
 
+# TODO: Create .bashrc and .zshrc if they dont exist
+
 - name: Set up Aliases
   become: false
   vars:
@@ -23,6 +25,32 @@
   with_items:
    - "{{ lookup('env', 'HOME') }}/.bashrc"
    - "{{ lookup('env', 'HOME') }}/.zshrc"
+
+
+- name: Set up Variables
+  become: false
+  vars:
+    default_vars: "{{ lookup('file', 'files/.variables') }}"
+  blockinfile:
+    path: '{{ item }}'
+    marker: "### {mark} Ansible managed: Variables"
+    content: '{{ default_vars }}'
+  with_items:
+   - "{{ lookup('env', 'HOME') }}/.bashrc"
+   - "{{ lookup('env', 'HOME') }}/.zshrc"
+
+
+- name: Set up Variables Fish
+  become: false
+  vars:
+    default_vars: "{{ lookup('file', 'files/.fish_variables') }}"
+  blockinfile:
+    path: '{{ item }}'
+    marker: "### {mark} Ansible managed: Variables"
+    content: '{{ default_vars }}'
+  with_items:
+   - "{{ lookup('env', 'HOME') }}/.config/fish/config.fish"
+
 
 - name: Setup Git Config
   template:

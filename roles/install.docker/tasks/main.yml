@@ -42,6 +42,7 @@
         apt: containerd.io
 
 - name: Install python docker module
+  become: false
   pip:
     state: latest
     name:

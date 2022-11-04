@@ -69,6 +69,7 @@
     - role: install.rust
       vars:
         channel: stable
+        profile: default
 
 - name: Install NodeJS
   hosts: dev_machine

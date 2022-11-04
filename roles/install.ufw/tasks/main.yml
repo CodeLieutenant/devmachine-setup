@@ -6,6 +6,7 @@
       name: iptables.service
       state: started
       enabled: yes
+  when: ansible_facts['os_family'] == "Archlinux"
 
 - name: Install UFW
   include_role:
@@ -28,8 +29,6 @@
       name: ufw.service
       state: started
       enabled: yes
-
-
 
 - name: 'Enable UFW'
   become: true

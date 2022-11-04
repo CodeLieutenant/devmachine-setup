@@ -8,7 +8,7 @@
 
 - name: 'Install {{ channel }} rust and tools'
   shell:
-    cmd: "rustup install {{ channel }} --profile {{ profile | default('default') }}"
+    cmd: "/tmp/rustup install {{ channel }} --profile {{ profile | default('default') }}"
     chdir: /tmp
 
 - name: 'Remove Rustup shell script'

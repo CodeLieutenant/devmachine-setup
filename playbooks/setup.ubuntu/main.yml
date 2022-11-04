@@ -111,12 +111,12 @@
   roles:
     - role: install.hosts-edit
 
-- name: Install Rust Analyzer Downloader
-  hosts: dev_machine
-  connection: local
-  become: false
-  roles:
-    - role: install.rust-analyzer-downloader
+# - name: Install Rust Analyzer Downloader
+#   hosts: dev_machine
+#   connection: local
+#   become: false
+#   roles:
+#     - role: install.rust-analyzer-downloader
 
 # - name: Install Jetbrains Toolbox
 #   hosts: dev_machine

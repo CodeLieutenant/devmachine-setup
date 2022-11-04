@@ -34,13 +34,13 @@
     path: '{{ item }}'
     marker: "### {mark} Ansible managed: Rust"
     block: |
-    set GOPATH ~/go
-    if not contains -- ~/go/bin $PATH
-      set -p PATH ~/go/bin
-    end
-    if not contains -- /usr/local/go/bin $PATH
-      set -p PATH /usr/local/go/bin
-    end
+      set GOPATH ~/go
+      if not contains -- ~/go/bin $PATH
+        set -p PATH ~/go/bin
+      end
+      if not contains -- /usr/local/go/bin $PATH
+        set -p PATH /usr/local/go/bin
+      end
   with_items:
    - "{{ lookup('env', 'HOME') }}/.config/fish/config.fish"
   when: '{{ enable_fish }}'

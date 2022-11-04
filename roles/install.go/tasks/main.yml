@@ -43,7 +43,7 @@
       end
   with_items:
    - "{{ lookup('env', 'HOME') }}/.config/fish/config.fish"
-  when: '{{ enable_fish }}'
+  when: enable_fish
 
 - name: Install Go Packages
   shell:

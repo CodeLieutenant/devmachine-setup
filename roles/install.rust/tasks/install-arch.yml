@@ -32,11 +32,11 @@
     path: '{{ item }}'
     marker: "### {mark} Ansible managed: Rust"
     block: |
-    if test -d ~/.cargo/bin
-      if not contains -- ~/.cargo/bin $PATH
-        set -p PATH ~/.cargo/bin
+      if test -d ~/.cargo/bin
+        if not contains -- ~/.cargo/bin $PATH
+          set -p PATH ~/.cargo/bin
+        end
       end
-    end
   with_items:
    - "{{ lookup('env', 'HOME') }}/.config/fish/config.fish"
-  when: '{{ enable_fish }}'
+  when: enable_fish

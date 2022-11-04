@@ -24,6 +24,8 @@
   become: false
   vars_files:
     - "{{ playbook_dir }}/config.yml"
+  vars:
+    enable_fish: false
   roles:
     - role: install.config-files
 
@@ -83,6 +85,8 @@
     - "{{ playbook_dir }}/config.yml"
   roles:
     - role: install.go
+      vars:
+        enable_fish: false
 
 - name: Install Neovim
   hosts: dev_machine

@@ -6,10 +6,10 @@
     cmd: "pacman -S {{ packages | join(' ') }} --noconfirm --needed"
   when: ansible_facts['os_family'] == "Archlinux"
 
-- name: 'Install Packages Ubuntu'
+- name: 'Install Packages Debian'
   become: true
   apt:
     name: '{{ item }}'
     state: present
-  when: ansible_facts['os_family'] == "Ubuntu"
+  when: ansible_facts['os_family'] == "Debian"
   with_items: '{{ packages }}'

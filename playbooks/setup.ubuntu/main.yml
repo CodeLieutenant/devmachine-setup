@@ -71,12 +71,12 @@
         channel: stable
         profile: default
 
-- name: Install NodeJS
-  hosts: dev_machine
-  connection: local
-  become: true
-  roles:
-    - role: install.nodejs
+# - name: Install NodeJS
+#   hosts: dev_machine
+#   connection: local
+#   become: true
+#   roles:
+#     - role: install.nodejs
 
 - name: Install GoLang
   hosts: dev_machine
@@ -88,26 +88,27 @@
     - role: install.go
       vars:
         enable_fish: false
+        version: 1.19.3
 
-- name: Install Neovim
-  hosts: dev_machine
-  connection: local
-  become: true
-  roles:
-    - role: install.neovim
+# - name: Install Neovim
+#   hosts: dev_machine
+#   connection: local
+#   become: true
+#   roles:
+#     - role: install.neovim
 
-- name: Install VSCode
-  hosts: dev_machine
-  connection: local
-  roles:
-    - role: install.vscode
+# - name: Install VSCode
+#   hosts: dev_machine
+#   connection: local
+#   roles:
+#     - role: install.vscode
 
-- name: Install Postman
-  hosts: dev_machine
-  connection: local
-  become: false
-  roles:
-    - role: install.postman
+# - name: Install Postman
+#   hosts: dev_machine
+#   connection: local
+#   become: false
+#   roles:
+#     - role: install.postman
 
 - name: Install Hosts Edit
   hosts: dev_machine

@@ -6,11 +6,12 @@
   vars:
     packages:
       - go
+  when: ansible_facts['os_family'] != "Debian"
 
 - name: Install Go
   unarchive:
-    src: https://dl.google.com/go{{ go_version }}.linux-amd64.tar.gz
-    dest: /usr/local/go
+    src: 'https://go.dev/dl/go{{ version }}.linux-amd64.tar.gz'
+    dest: /usr/local
     remote_src: yes
     creates: /usr/local/go/bin/go
   register: go_download
@@ -46,6 +47,7 @@
   when: enable_fish
 
 - name: Install Go Packages
+  become: false
   shell:
    cmd: 'go install {{ item }}'
   with_items: '{{ go_packages }}'

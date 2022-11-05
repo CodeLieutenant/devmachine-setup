@@ -69,7 +69,6 @@ go_packages:
   - github.com/haya14busa/goplay/cmd/goplay@latest
   - github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@latest
   - github.com/go-swagger/go-swagger/cmd/swagger@latest
-  - github.com/GoTestTools/limgo@latest
   - mvdan.cc/gofumpt@latest
 
 swappiness: 10

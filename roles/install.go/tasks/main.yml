@@ -1,53 +1,38 @@
 ---
-
-- name: 'Install Go'
-  include_role:
-    name: install.package
-  vars:
-    packages:
-      - go
+- name: Install GoLang
+  ansible.builtin.include_tasks: "ubuntu.yml"
   when: ansible_facts['os_family'] != "Debian"
 
-- name: Install Go
-  unarchive:
-    src: 'https://go.dev/dl/go{{ version }}.linux-amd64.tar.gz'
-    dest: /usr/local
-    remote_src: yes
-    creates: /usr/local/go/bin/go
-  register: go_download
-  when: ansible_facts['os_family'] == "Debian"
+- name: Install GoLang
+  ansible.builtin.include_tasks: "arch.yml"
+  when: ansible_facts['os_family'] != "Archlinux"
 
 - name: Set up Go Env BASH/ZSH
   become: false
-  blockinfile:
-    path: '{{ item }}'
-    marker: "### {mark} Ansible managed: GoLang"
+  ansible.builtin.blockinfile:
+    path: "{{ item }}"
+    marker: "### {mark} Ansible managed: GoLang Path"
     block: |
       export GOPATH=$HOME/go
-      export PATH="$PATH:$GOPATH/bin:/usr/local/go/bin"
+      export PATH="$PATH:$GOPATH/bin"
   with_items:
-   - "{{ lookup('env', 'HOME') }}/.bashrc"
-   - "{{ lookup('env', 'HOME') }}/.zshrc"
-
-- name: Set up Rust Env Fish
-  become: false
-  blockinfile:
-    path: '{{ item }}'
-    marker: "### {mark} Ansible managed: Rust"
-    block: |
-      set GOPATH ~/go
-      if not contains -- ~/go/bin $PATH
-        set -p PATH ~/go/bin
-      end
-      if not contains -- /usr/local/go/bin $PATH
-        set -p PATH /usr/local/go/bin
-      end
-  with_items:
-   - "{{ lookup('env', 'HOME') }}/.config/fish/config.fish"
-  when: enable_fish
+    - "{{ lookup('env', 'HOME') }}/.bashrc"
+    - "{{ lookup('env', 'HOME') }}/.zshrc"
 
 - name: Install Go Packages
   become: false
-  shell:
-   cmd: 'go install {{ item }}'
-  with_items: '{{ go_packages }}'
+  ansible.builtin.shell:
+    cmd: "go install {{ item }}"
+  with_items:
+    - github.com/go-delve/delve/cmd/dlv@latest
+    - github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+    - github.com/uudashr/gopkgs/v2/cmd/gopkgs@latest
+    - github.com/ramya-rao-a/go-outline@latest
+    - github.com/cweill/gotests/gotests@latest
+    - github.com/cosmtrek/air@latest
+    - github.com/fatih/gomodifytags@latest
+    - github.com/josharian/impl@latest
+    - github.com/haya14busa/goplay/cmd/goplay@latest
+    - github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@latest
+    - github.com/go-swagger/go-swagger/cmd/swagger@latest
+    - mvdan.cc/gofumpt@latest

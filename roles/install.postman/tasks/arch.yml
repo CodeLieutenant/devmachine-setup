@@ -1,0 +1,7 @@
+---
+- name: 'Install Postman via AUR'
+  include_role:
+    name: install.aur-package
+  vars:
+    packages:
+      - postman-bin

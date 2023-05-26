@@ -1,0 +1,69 @@
+---
+# ansible-playbook --ask-vault-pass --ask-become-pass -vvv --extra-vars '{ key_name: "MySSHKeyName" }' playbooks/setup.arch/main.yml
+
+- name: Enable services
+  hosts: dev_machine
+  connection: local
+  become: false
+  vars_files:
+    - "{{ playbook_dir }}/config.yml"
+  tasks:
+    - name: Ensure cron is running
+      ansible.builtin.service:
+        name: cronie
+        state: started
+        enabled: true
+    - name: Ensure bluetooth is running
+      ansible.builtin.service:
+        name: bluetooth
+        state: started
+        enabled: true
+    - name: Ensure firewalld is running
+      ansible.builtin.service:
+        name: firewalld
+        state: started
+        enabled: true
+    - name: Ensure sshd is running
+      ansible.builtin.service:
+        name: sshd
+        state: started
+        enabled: true
+    - name: Install Python packages
+      ansible.builtin.pip:
+        state: present
+        name: "{{ item }}"
+      with_items: "{{ pip_packages }}"
+    - ansible.builtin.service:
+      vars:
+        name: fstrim.timer
+        state: started
+        enabled: true
+
+- name: Configure Machine
+  hosts: dev_machine
+  connection: local
+  roles:
+    - role: reduce.swappiness
+    - role: install.config-files
+    - role: update.packages
+      vars:
+        system: "arch"
+    - role: GROG.package
+    # - role: setup.ssh-key
+    # - role: add.ssh-key.github
+    #   vars:
+    #     ssh_pub_key_path: "{{ lookup('env', 'HOME') }}/.ssh/{{ ssh_key_filename }}.pub"
+    #     github_access_token: "{{ github_ssh_token }}"
+    - role: install.paru
+    - role: install.kvm
+    - role: install.aur-package
+      vars:
+        packages: "{{ aur_packages }}"
+    - role: install.nodejs
+    - role: install.go
+    - role: install.vscode
+    - role: install.postman
+    - role: install.jetbrains-toolbox
+    - role: install.docker
+      vars:
+        user: "{{ ansible_env.USER }}"

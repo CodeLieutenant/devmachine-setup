@@ -24,19 +24,3 @@
   with_items:
    - "{{ lookup('env', 'HOME') }}/.bashrc"
    - "{{ lookup('env', 'HOME') }}/.zshrc"
-
-
-- name: Set up Rust Env Fish
-  become: false
-  blockinfile:
-    path: '{{ item }}'
-    marker: "### {mark} Ansible managed: Rust"
-    block: |
-      if test -d ~/.cargo/bin
-        if not contains -- ~/.cargo/bin $PATH
-          set -p PATH ~/.cargo/bin
-        end
-      end
-  with_items:
-   - "{{ lookup('env', 'HOME') }}/.config/fish/config.fish"
-  when: enable_fish

@@ -1,5 +1,6 @@
 package_list:
   - { name: bat, pacman: bat }
+  - { name: intel-ucode, pacman: intel-ucode }
   - { name: aspell-en, pacman: aspell-en }
   - { name: libmythes, pacman: libmythes }
   - { name: redshift, pacman: redshift }
@@ -20,9 +21,11 @@ package_list:
   - { name: wl-clipboard, pacman: wl-clipboard }
   - { name: clang, pacman: clang }
   - { name: gcc, pacman: gcc }
+  - { name: gdb, pacman: gdb }
   - { name: llvm, pacman: llvm }
   - { name: ninja, pacman: ninja }
   - { name: cmake, pacman: cmake }
+  - { name: clang, pacman: clang }
   - { name: jq, pacman: jq }
   - { name: lua, pacman: lua }
   - { name: php, pacman: php }
@@ -42,7 +45,32 @@ package_list:
   - { name: php-sodium, pacman: php-sodium }
   - { name: php-sqlite, pacman: php-sqlite }
   - { name: xdebug, pacman: xdebug }
+  - { name: noto-fonts-emoji, pacman: noto-fonts-emoji }
+  - { name: ttf-joypixels, pacman: ttf-joypixels }
+  - { name: croc, pacman: croc }
+  - { name: tokei, pacman: tokei }
+  - { name: xsv, pacman: xsv }
+  - { name: skim, pacman: skim }
+  - { name: fzf, pacman: fzf }
+  - { name: jql, pacman: jql }
+  - { name: util-linux, pacman: util-linux }
+  - { name: hdparm, pacman: hdparm }
+  - { name: rustup, pacman: rustup }
   - { name: python-pip, pacman: python-pip }
+  - { name: freetype2, pacman: freetype2 }
+  - { name: ansible, pacman: ansible }
+  - { name: ansible-lint, pacman: ansible-lint }
+  - { name: ansible-language-server, pacman:  ansible-language-server }
+  - { name: nodejs, pacman: nodejs }
+  - { name: libappindicator-gdk3, pacman: libappindicator-gdk3 }
+  - { name: webkit2gtk-4.1, pacman: webkit2gtk-4.1 }
+  - { name: openssl, pacman: openssl }
+  - { name: libxml2, pacman: libxml2 }
+  - { name: libicu, pacman: libicu }
+  - { name: sqlite3, pacman: sqlite3 }
+  - { name: zlib, pacman: zlib }
+  - { name: oniguruma, pacman: oniguruma }
+  - { name: valgrind, pacman: valgrind }
 
 aur_packages:
   - whatsapp-for-linux
@@ -55,6 +83,14 @@ aur_packages:
   - discord_arch_electron
   - shellcheck-bin
   - nerd-fonts-hack
+  - jetbrains-toolbox
+  - otf-openmoji
+  - bitwarden
+  - discord
+  - timeshift
+  - community/signal-desktop
+  - gnome-browser-connector
+  - aur/timeshift-autosnap
 
 pip_packages:
   - boto3
@@ -68,20 +104,6 @@ pip_packages:
   - requests
   - github3.py
   - ansible-lint
-
-go_packages:
-  - github.com/go-delve/delve/cmd/dlv@latest
-  - github.com/golangci/golangci-lint/cmd/golangci-lint@latest
-  - github.com/uudashr/gopkgs/v2/cmd/gopkgs@latest
-  - github.com/ramya-rao-a/go-outline@latest
-  - github.com/cweill/gotests/gotests@latest
-  - github.com/cosmtrek/air@latest
-  - github.com/fatih/gomodifytags@latest
-  - github.com/josharian/impl@latest
-  - github.com/haya14busa/goplay/cmd/goplay@latest
-  - github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@latest
-  - github.com/go-swagger/go-swagger/cmd/swagger@latest
-  - mvdan.cc/gofumpt@latest
 
 swappiness: 10
 

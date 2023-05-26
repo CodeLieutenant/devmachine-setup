@@ -1,22 +1,21 @@
 ---
 # code: language=ansible
 
-- name: 'Download Paru from Github'
+- name: "Download Paru from Github"
   ansible.builtin.git:
-    accept_newhostkey: yes
-    clone: yes
+    accept_newhostkey: true
+    clone: true
     dest: /tmp/paru
     repo: https://aur.archlinux.org/paru.git
   environment:
-    GIT_TERMINAL_PROMPT: '0'
+    GIT_TERMINAL_PROMPT: "0"
 
-- name: 'Compile and install Paru'
+- name: "Compile and install Paru"
   ansible.builtin.shell:
-    cmd: 'makepkg -si --noconfirm --needed --noprogressbar'
+    cmd: "makepkg -si --noconfirm --needed --noprogressbar"
     chdir: /tmp/paru
 
-- name: 'Remove paru from temp dir'
-  ignore_errors: true
+- name: "Remove paru from temp dir"
   ansible.builtin.file:
     path: /tmp/paru
     state: absent

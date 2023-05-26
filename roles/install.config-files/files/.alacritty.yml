@@ -1,0 +1,87 @@
+env:
+  TERM: alacritty
+
+window:
+  dimensions:
+    columns: 150
+    lines: 35
+  padding:
+    x: 5
+    y: 5
+  dynamic_padding: true
+  decorations: full
+  opacity: 0.9
+  startup_mode: Windowed
+  title: Alacritty
+  dynamic_title: true
+  class:
+    instance: Alacritty
+    general: Alacritty
+  decorations_theme_variant: Dark
+
+scrolling:
+  history: 10000
+font:
+  normal:
+    family: 'JetBrainsMono NFM'
+    style: 'Regular'
+  bold:
+    family: 'JetbrainsMono NFM'
+    style: Bold
+  italic:
+    family: 'JetBrainsMono NFM'
+    style: Italic
+  size: 13.0
+  builtin_box_drawing: true
+
+line_indicator:
+  foreground: None
+  background: None
+
+bell:
+  duration: 0
+selection:
+  semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
+  save_to_clipboard: false
+cursor:
+  style:
+    shape: Beam
+    blinking: Always
+live_config_reload: true
+
+working_directory: None
+ipc_socket: true
+
+hints:
+  alphabet: 'jfkdls;ahgurieowpq'
+  enabled:
+    - regex: "(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)[^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`]+"
+      hyperlinks: true
+      command: xdg-open
+key_bindings:
+  - { key: Paste, action: Paste }
+  - { key: Copy, action: Copy }
+  - { key: L, mods: Control, action: ClearLogNotice }
+  - { key: L, mods: Control, mode: ~Search, chars: "\x0c" }
+  - { key: PageUp, mods: Shift, mode: ~Alt, action: ScrollPageUp }
+  - { key: PageDown, mods: Shift, mode: ~Alt, action: ScrollPageDown }
+  - { key: Home, mods: Shift, mode: ~Alt, action: ScrollToTop }
+  - { key: End, mods: Shift, mode: ~Alt, action: ScrollToBottom }
+  - { key: W, mods: Control, action: Quit }
+  - { key: Return, mode: Search, action: SearchConfirm }
+  - { key: Escape, mode: Search, action: SearchCancel }
+  - { key: C, mods: Control, mode: Search, action: SearchCancel }
+  - { key: U, mods: Control, mode: Search, action: SearchClear }
+  - { key: W, mods: Control, mode: Search, action: SearchDeleteWord }
+  - { key: P, mods: Control, mode: Search, action: SearchHistoryPrevious }
+  - { key: N, mods: Control, mode: Search, action: SearchHistoryNext }
+  - { key: Up, mode: Search, action: SearchHistoryPrevious }
+  - { key: Down, mode: Search, action: SearchHistoryNext }
+  - { key: Return, mode: Search, action: SearchFocusNext }
+  - { key: Return, mods: Shift, mode: Search, action: SearchFocusPrevious }
+
+debug:
+  render_timer: false
+  persistent_logging: false
+  log_level: Error
+  print_events: false

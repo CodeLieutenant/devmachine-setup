@@ -1,0 +1,25 @@
+---
+- name: Download oh-my-zsh install script
+  become: false
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+    dest: /tmp/install.sh
+    mode: '0755'
+
+- name: Run oh-my-zsh install script
+  become: false
+  ansible.builtin.shell: /tmp/install.sh --unattended
+
+- name: Clone powerlevel10k
+  become: false
+  ansible.builtin.git:
+    repo: https://github.com/romkatv/powerlevel10k.git
+    dest: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/themes/powerlevel10k"
+    depth: 1
+
+- name: Clone fzf-search
+  become: false
+  ansible.builtin.git:
+    repo: https://github.com/joshskidmore/zsh-fzf-history-search
+    dest: "{{ lookup('env', 'HOME') }}/.oh-my-zsh/custom/plugins/zsh-fzf-history-search"
+    depth: 1

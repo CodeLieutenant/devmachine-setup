@@ -1,0 +1,13 @@
+---
+- name: Install Docker
+  ansible.builtin.role: install.package
+  vars:
+    packages:
+      - docker
+      - docker-compose
+      - docker-scan
+
+- name: Create docker group
+  ansible.builtin.group:
+    name: docker
+    state: present

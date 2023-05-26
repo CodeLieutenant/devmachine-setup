@@ -4,7 +4,7 @@
 
 - name: Authorize key with GitHub
   community.general.github_key:
-    force: yes
+    force: true
     name: "{{ key_name | default('NewPublicKeyFromAnsible') }}"
     token: '{{ github_access_token }}'
     pubkey: '{{ ssh_pub_key.stdout }}'

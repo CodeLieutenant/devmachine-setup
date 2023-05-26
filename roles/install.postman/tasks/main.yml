@@ -1,29 +1,9 @@
 ---
 
-- name: "Install Postman via AUR"
-  include_role:
-    name: install.aur-package
-  vars:
-    packages:
-      - postman-bin
+- name: Install Postman
+  ansible.builtin.include_tasks: 'ubuntu.yml'
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Install Postman
+  ansible.builtin.include_tasks: 'arch.yml'
   when: ansible_facts['os_family'] == "Archlinux"
-
-- name: "Install Postman"
-  unarchive:
-    src: https://dl.pstmn.io/download/latest/linux64
-    dest: /opt
-    remote_src: yes
-    creates: /opt/Postman/Postman
-  when: ansible_facts['os_family'] == "Debian"
-
-- name: "Ensure local applications folder exists"
-  file:
-    path: /usr/local/share/applications
-    state: directory
-  when: ansible_facts['os_family'] == "Debian"
-
-- name: "Add Postman desktop file"
-  copy:
-    src: files/postman.desktop
-    dest: /usr/local/share/applications/postman.desktop
-  when: ansible_facts['os_family'] == "Debian"

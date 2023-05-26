@@ -1,58 +1,62 @@
 ---
+- name: SSHD Config
+  become: true
+  ansible.builtin.template:
+    src: files/sshd_config.j2
+    dest: /etc/ssh/sshd_config
+    mode: "0644"
 
-# TODO: Create .bashrc and .zshrc if they dont exist
+- name: Restart SSH Server
+  become: true
+  ansible.builtin.service:
+    name: sshd
+    state: restarted
+
+- name: Install and Configure ZSH
+  ansible.builtin.include_tasks: "zsh.yml"
+
+- name: Alacritty Config
+  become: true
+  ansible.builtin.template:
+    src: files/.alacritty.yml
+    mode: "0644"
+    dest: "{{ lookup('env', 'HOME') }}/.alacritty.yml"
 
 - name: Set up Aliases
   become: false
   vars:
     aliases: "{{ lookup('file', 'files/.aliases') }}"
-  blockinfile:
-    path: '{{ item }}'
+  ansible.builtin.blockinfile:
+    path: "{{ item }}"
     marker: "### {mark} Ansible managed: Aliases"
-    content: '{{ aliases }}'
+    content: "{{ aliases }}"
   with_items:
-   - "{{ lookup('env', 'HOME') }}/.bashrc"
-   - "{{ lookup('env', 'HOME') }}/.zshrc"
+    - "{{ lookup('env', 'HOME') }}/.zshrc"
 
 - name: Set up SSH Editor
   become: false
   vars:
     ssh_shell: "{{ lookup('file', 'files/.ssh_shell') }}"
-  blockinfile:
-    path: '{{ item }}'
+  ansible.builtin.blockinfile:
+    path: "{{ item }}"
     marker: "### {mark} Ansible managed: SSH Shell"
-    content: '{{ ssh_shell }}'
+    content: "{{ ssh_shell }}"
   with_items:
-   - "{{ lookup('env', 'HOME') }}/.bashrc"
-   - "{{ lookup('env', 'HOME') }}/.zshrc"
-
+    - "{{ lookup('env', 'HOME') }}/.zshrc"
 
 - name: Set up Variables
   become: false
   vars:
     default_vars: "{{ lookup('file', 'files/.variables') }}"
-  blockinfile:
-    path: '{{ item }}'
+  ansible.builtin.blockinfile:
+    path: "{{ item }}"
     marker: "### {mark} Ansible managed: Variables"
-    content: '{{ default_vars }}'
+    content: "{{ default_vars }}"
   with_items:
-   - "{{ lookup('env', 'HOME') }}/.bashrc"
-   - "{{ lookup('env', 'HOME') }}/.zshrc"
-
-
-- name: Set up Variables Fish
-  become: false
-  vars:
-    default_vars: "{{ lookup('file', 'files/.fish_variables') }}"
-  blockinfile:
-    path: '{{ item }}'
-    marker: "### {mark} Ansible managed: Variables"
-    content: '{{ default_vars }}'
-  with_items:
-   - "{{ lookup('env', 'HOME') }}/.config/fish/config.fish"
-  when: enable_fish
+    - "{{ lookup('env', 'HOME') }}/.zshrc"
 
 - name: Setup Git Config
-  template:
+  become: false
+  ansible.builtin.template:
     src: files/.gitconfig.j2
     dest: "{{ lookup('env', 'HOME') }}/.gitconfig"

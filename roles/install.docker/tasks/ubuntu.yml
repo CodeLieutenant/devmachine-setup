@@ -1,0 +1,40 @@
+---
+- name: Add Docker GPG apt Key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Install required system packages
+  apt:
+    pkg:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+      - python3-pip
+      - virtualenv
+      - python3-setuptools
+    state: latest
+    update_cache: true
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Add Docker Repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu focal stable
+    state: present
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: "Install docker {{ ansible_facts['os_family'] }}"
+  include_role:
+    name: GROG.package
+  vars:
+    package_list:
+      - name: docker
+        pacman: docker
+        apt: docker-ce
+      - name: cli
+        pacman_ignore: yes
+        apt: docker-ce-cli
+      - name: containerd
+        pacman_ignore: yes
+        apt: containerd.io

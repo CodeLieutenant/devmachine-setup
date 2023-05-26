@@ -1,0 +1,20 @@
+---
+
+- name: Install Go
+  ansible.builtin.unarchive:
+    src: 'https://go.dev/dl/go{{ version }}.linux-amd64.tar.gz'
+    dest: /usr/local
+    remote_src: true
+    creates: /usr/local/go/bin/go
+  register: go_download
+
+- name: Set up Go Env BASH/ZSH
+  become: false
+  ansible.builtin.blockinfile:
+    path: '{{ item }}'
+    marker: "### {mark} Ansible managed: GoLang Path for Debian/Ubuntu"
+    block: |
+      export PATH="$PATH:$GOPATH/bin:/usr/local/go/bin"
+  with_items:
+   - "{{ lookup('env', 'HOME') }}/.bashrc"
+   - "{{ lookup('env', 'HOME') }}/.zshrc"

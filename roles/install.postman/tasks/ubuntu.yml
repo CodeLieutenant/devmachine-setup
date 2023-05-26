@@ -1,0 +1,18 @@
+---
+
+- name: "Install Postman"
+  unarchive:
+    src: https://dl.pstmn.io/download/latest/linux64
+    dest: /opt
+    remote_src: true
+    creates: /opt/Postman/Postman
+
+- name: "Ensure local applications folder exists"
+  file:
+    path: /usr/local/share/applications
+    state: directory
+
+- name: "Add Postman desktop file"
+  copy:
+    src: files/postman.desktop
+    dest: /usr/local/share/applications/postman.desktop

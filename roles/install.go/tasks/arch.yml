@@ -1,0 +1,6 @@
+---
+- name: Install Go on Arch
+  ansible.builtin.include_role: 'install.package'
+  vars:
+    package:
+      - go
